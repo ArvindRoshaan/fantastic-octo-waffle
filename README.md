@@ -3,7 +3,10 @@
 IIT Hyderabad contingent participated in the Inter IIT Tech Meet 2023 AI/ ML challenge sponsored by [DevRev](https://devrev.ai/). Teams from 20+ IITs participated and we ranked 4th on presentation, report and code work!
 
 ### Problem Statement
-Given a domain specific-query, retrieve the most relevant passage from a multi-domain corpus and extract the answer from the passage.  
+Given a domain specific-query, retrieve the most relevant passage from a multi-domain corpus and extract the answer from the passage. The challenge had certain incredible restrictions:
+1) Training and Inference only can use a Standard Google Colab CPU. *Yes, NO GPUs allowed for even training the models!*   
+2) Inference time to be within 1 second per query. Quicker the better!
+
 Example #1:  
 *[Input] Query from domain* "Solar Energy": "What are the insolation levels of most populated areas?"  
 *[Desired Output] Most relevant passage from domain* "Solar Energy": "The Earth receives 174,000 terawatts (TW) of incoming solar radiation (insolation) at the upper atmosphere. Approximately 30% is reflected back to space while the rest is absorbed by clouds, oceans and land masses. The spectrum of solar light at the Earth's surface is mostly spread across the visible and near-infrared ranges with a small part in the near-ultraviolet. Most people around the world live in areas with insolation levels of 150 to 300 watts per square meter or 3.5 to 7.0 kWh/m2 per day."  
@@ -20,7 +23,9 @@ The data had the following attributes
 6) Answer_start:  
 
 ### Approach
-We implemented a novel two-stage ensemble of top-5 passages from classical and neural information retrieval models for efcient re-ranking. That is, we first obtained top-5 passages as predicted by our 
+We approach this problem in a two-step fashion keeping in mind the hard compute constraints. First, we attempt to extract top 5 passages from the theme (of the query) using various information retrieval techniques, both classical as well as neural: TF-IDF (Term Frequency - Inverse Document Frequency), Latent Semantic Indexing (LSI), Elastic Search and pre-trained multi-qa-mpnet-base-dot-v1 model from sentence-transformers (This model was tuned for semantic search: Given a query/question, if can find relevant passages. It was trained on a large and diverse set of (question, answer) pairs). Then we re-rank the top-5 passages first among classical IR methods and then re-rank them again against the neural mathod. Thus this novel two-stage ensemble of top-5 passages from classical and neural information retrieval models enables effcient re-ranking of passages compared to expensive cross-encoder methods. Based on this ensemble strategy we find top 1 passage for our query
+
+Second, we pass the (query, potential_passage) pair to a pre-trained neural question answering model (SqueezeBERT - as we found it to be extremely efficient and accurate). This model can handle the case when the query cannot be answered by the potential_passage.
 
 ### Result
 
