@@ -4,7 +4,7 @@ IIT Hyderabad contingent participated in the Inter IIT Tech Meet 2023 AI/ ML cha
 
 ### Problem Statement
 Given a domain specific-query, retrieve the most relevant passage from a multi-domain corpus and extract the answer from the passage. The challenge had certain incredible restrictions:
-1) Training and Inference only can use a Standard Google Colab CPU. *Yes, NO GPUs allowed for even training the models!*   
+1) Training and Inference can ONLY use a Standard Google Colab CPU. *Yes, NO GPUs allowed for even training the models!*   
 2) Inference time to be within 1 second per query. Quicker the better!
 
 Example #1:  
